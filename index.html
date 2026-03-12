@@ -1,54 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Drink Temperature Finder</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thermosip ☕</title>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="manifest.json">
 
 <style>
 body{
-font-family: Arial;
-text-align:center;
-background:#f5f5f5;
-padding-top:50px;
+    font-family: Arial;
+    text-align:center;
+    background:#f4f4f4;
+    margin-top:100px;
+}
+
+h1{
+    color:#333;
 }
 
 button{
-width:160px;
-padding:12px;
-margin:6px;
-font-size:16px;
-border:none;
-border-radius:8px;
-background:#4CAF50;
-color:white;
+    padding:15px 30px;
+    font-size:20px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
 
 button:hover{
-background:#45a049;
+    background:#218838;
 }
 
-#result{
-margin-top:20px;
-font-size:18px;
+#appContainer {
+    margin-top: 30px;
+}
+
+#result {
+    margin-top: 20px;
+    font-size:18px;
+    white-space: pre-line;
 }
 </style>
+
 </head>
 
 <body>
 
-<h2>How are you feeling today?</h2>
+<h1>Thermosip ☕</h1>
+<p>Find the perfect drink temperature based on your mood.</p>
 
-<button onclick="getTemp('happy')">Happy</button><br>
-<button onclick="getTemp('sad')">Sad</button><br>
-<button onclick="getTemp('bored')">Bored</button><br>
-<button onclick="getTemp('tired')">Tired</button>
+<!-- Launch App Button -->
+<button id="launchAppBtn">Launch Thermosip</button>
 
-<div id="result"></div>
+<!-- App Container (hidden until button clicked) -->
+<div id="appContainer" style="display:none;">
+    <button onclick="getTemp('happy')">Happy</button><br>
+    <button onclick="getTemp('sad')">Sad</button><br>
+    <button onclick="getTemp('bored')">Bored</button><br>
+    <button onclick="getTemp('tired')">Tired</button>
 
-<script src="app.js"></script>
+    <div id="result"></div>
+</div>
+
+<script>
+// Show app when button clicked
+const launchBtn = document.getElementById("launchAppBtn");
+const appContainer = document.getElementById("appContainer");
+
+launchBtn.addEventListener("click", () => {
+    appContainer.style.display = "block";
+    launchBtn.style.display = "none";
+});
+
+// Thermosip app logic
+function getTemp(mood) {
+    let base, msg;
+
+    if(mood === "happy") {
+        base = rand(100,110);
+        msg = "Enjoy your drink!";
+    } else if(mood === "sad") {
+        base = rand(120,130);
+        msg = "Hope you feel better!";
+    } else if(mood === "bored") {
+        base = rand(110,120);
+        msg = "Have some fun with your drink!";
+    } else if(mood === "tired") {
+        base = rand(120,130);
+        msg = "Hope you get some rest after your drink!";
+    }
+
+    let decimal = rand(1,9)/10;
+    let temp = base + decimal;
+
+    document.getElementById("result").innerText =
+        "Optimal temperature is " + temp + "°F\n" + msg;
+}
+
+function rand(min,max){
+    return Math.floor(Math.random()*(max-min+1)) + min;
+}
+</script>
+
+<!-- Optional: Service Worker for offline support -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('Service Worker Registered'))
+    .catch(err => console.log('Service Worker registration failed:', err));
+}
+</script>
 
 </body>
 </html>
