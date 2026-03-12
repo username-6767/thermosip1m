@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Drink Temperature Finder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+font-family: Arial;
+text-align:center;
+background:#f5f5f5;
+padding-top:50px;
+}
+
+button{
+width:160px;
+padding:12px;
+margin:6px;
+font-size:16px;
+border:none;
+border-radius:8px;
+background:#4CAF50;
+color:white;
+}
+
+button:hover{
+background:#45a049;
+}
+
+#result{
+margin-top:20px;
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>How are you feeling today?</h2>
+
+<button onclick="getTemp('happy')">Happy</button><br>
+<button onclick="getTemp('sad')">Sad</button><br>
+<button onclick="getTemp('bored')">Bored</button><br>
+<button onclick="getTemp('tired')">Tired</button>
+
+<div id="result"></div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
